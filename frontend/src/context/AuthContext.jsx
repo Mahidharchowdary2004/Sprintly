@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Configure axios to always send the token
-  axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://sprintly-eta.vercel.app';
 
   useEffect(() => {
     const token = localStorage.getItem('token');
