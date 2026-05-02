@@ -7,9 +7,9 @@ const Landing = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 min-h-[90vh] flex items-center">
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40">
-          <img 
-            src="/hero-bg.png" 
-            alt="Background" 
+          <img
+            src="/hero-bg.png"
+            alt="Background"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-dark-obsidian via-transparent to-dark-obsidian"></div>
@@ -19,12 +19,12 @@ const Landing = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan text-[10px] font-bold uppercase tracking-[0.2em] mb-8 animate-fade-in">
             <Zap size={14} /> Intelligence-Driven Operations
           </div>
-          
+
           <h1 className="text-6xl md:text-8xl font-display font-bold text-white tracking-tighter mb-8 leading-[0.95] animate-fade-in">
             Architect Your<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan via-accent-blue to-accent-cyan bg-[length:200%_auto] animate-gradient">Velocity.</span>
           </h1>
-          
+
           <p className="max-w-2xl mx-auto text-slate-400 text-lg md:text-xl mb-12 leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
             The high-performance engine for modern strategic teams. Relational project tracking, automated insights, and a workspace designed for extreme focus.
           </p>
@@ -51,19 +51,19 @@ const Landing = () => {
             <h2 className="text-4xl font-display font-bold text-white mb-4">Strategic Frameworks</h2>
             <p className="text-slate-500 max-w-xl mx-auto">Built on a foundation of reliability and extreme performance.</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard 
+            <FeatureCard
               icon={<Shield size={32} className="text-accent-cyan" />}
               title="Relational Integrity"
               description="PostgreSQL backend with Neon serverless architecture ensures mission-critical data persistence and consistency."
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<Users size={32} className="text-accent-blue" />}
               title="Sovereign Control"
               description="Advanced RBAC allows you to delegate with precision while maintaining total strategic oversight of all initiatives."
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<BarChart3 size={32} className="text-accent-cyan" />}
               title="Operational Insight"
               description="Visualize velocity in real-time through high-performance glass interfaces designed for decision-making."
