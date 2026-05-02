@@ -130,13 +130,24 @@ const Dashboard = () => {
             <h3 className="text-xl font-bold text-white mb-6">Performance Matrix</h3>
             <div className="h-48 w-full flex items-end gap-2 px-2">
                {(stats.performance || [0, 0, 0, 0, 0, 0, 0]).map((h, i) => (
-                 <div key={i} className="flex-1 group relative">
+                 <div key={i} className="flex-1 group relative h-full flex items-end">
+                    {/* Background Track */}
+                    <div className="absolute inset-0 w-full bg-white/[0.02] rounded-t-lg border-x border-transparent group-hover:bg-white/[0.04] transition-colors"></div>
+                    
+                    {/* Active Bar */}
                     <div 
-                      className="w-full bg-gradient-to-t from-accent-cyan/20 to-accent-cyan/40 rounded-t-lg transition-all duration-500 group-hover:from-accent-cyan/40 group-hover:to-accent-cyan shadow-[0_0_15px_rgba(34,211,238,0.1)]"
-                      style={{ height: `${h}%` }}
-                    ></div>
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-bold text-accent-cyan">
-                      {Math.round(h)}%
+                      className="w-full bg-gradient-to-t from-accent-cyan/20 to-accent-cyan/60 rounded-t-lg transition-all duration-700 ease-out group-hover:from-accent-cyan/40 group-hover:to-accent-cyan shadow-[0_0_15px_rgba(34,211,238,0.1)] relative z-10"
+                      style={{ height: `${Math.max(h, 2)}%` }}
+                    >
+                      {/* Top Cap Glow */}
+                      <div className="absolute top-0 left-0 w-full h-[2px] bg-accent-cyan shadow-[0_0_10px_#22d3ee]"></div>
+                    </div>
+
+                    {/* Tooltip */}
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-20">
+                      <div className="bg-dark-obsidian border border-accent-cyan/30 px-2 py-1 rounded text-[10px] font-bold text-accent-cyan whitespace-nowrap shadow-xl">
+                        {Math.round(h)}% Velocity
+                      </div>
                     </div>
                  </div>
                ))}
