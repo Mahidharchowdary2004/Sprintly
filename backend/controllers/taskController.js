@@ -192,12 +192,32 @@ const getDashboardStats = async (req, res) => {
     const tasks = await prisma.task.findMany({ where });
     const now = new Date();
 
+    // Calculate last 7 days performance
+    const dailyPerformance = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      d.setHours(0, 0, 0, 0);
+      const nextD = new Date(d);
+      nextD.setDate(d.getDate() + 1);
+
+      const count = tasks.filter(t => {
+        const updatedAt = new Date(t.updatedAt);
+        return updatedAt >= d && updatedAt < nextD;
+      }).length;
+
+      // Map to a percentage for the chart (heuristic: max 10 tasks = 100%)
+      const percentage = Math.min((count / 10) * 100, 100);
+      dailyPerformance.push(percentage || 5); // Minimum 5% for visibility
+    }
+
     const stats = {
       total: tasks.length,
       todo: tasks.filter(t => t.status === 'ToDo').length,
       inProgress: tasks.filter(t => t.status === 'InProgress').length,
       completed: tasks.filter(t => t.status === 'Completed').length,
-      overdue: tasks.filter(t => t.dueDate && new Date(t.dueDate) < now && t.status !== 'Completed').length
+      overdue: tasks.filter(t => t.dueDate && new Date(t.dueDate) < now && t.status !== 'Completed').length,
+      performance: dailyPerformance
     };
 
     res.json(stats);

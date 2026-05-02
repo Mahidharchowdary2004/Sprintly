@@ -11,7 +11,8 @@ const Dashboard = () => {
     todo: 0,
     inProgress: 0,
     completed: 0,
-    overdue: 0
+    overdue: 0,
+    performance: [0, 0, 0, 0, 0, 0, 0]
   });
   const [projects, setProjects] = useState([]);
   const [filters, setFilters] = useState({
@@ -126,20 +127,23 @@ const Dashboard = () => {
           <div>
             <h3 className="text-xl font-bold text-white mb-6">Performance Matrix</h3>
             <div className="h-48 w-full flex items-end gap-2 px-2">
-               {[40, 65, 45, 90, 55, 75, 60].map((h, i) => (
+               {(stats.performance || [0, 0, 0, 0, 0, 0, 0]).map((h, i) => (
                  <div key={i} className="flex-1 group relative">
                     <div 
                       className="w-full bg-gradient-to-t from-accent-cyan/20 to-accent-cyan/40 rounded-t-lg transition-all duration-500 group-hover:from-accent-cyan/40 group-hover:to-accent-cyan shadow-[0_0_15px_rgba(34,211,238,0.1)]"
                       style={{ height: `${h}%` }}
                     ></div>
                     <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-bold text-accent-cyan">
-                      {h}%
+                      {Math.round(h)}%
                     </div>
                  </div>
                ))}
-            </div>
-            <div className="flex justify-between mt-4 px-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>            <div className="flex justify-between mt-4 px-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+               {[6, 5, 4, 3, 2, 1, 0].map(i => {
+                 const d = new Date();
+                 d.setDate(d.getDate() - i);
+                 return <span key={i}>{d.toLocaleDateString(undefined, { weekday: 'short' })}</span>;
+               })}
             </div>
           </div>
         </div>
