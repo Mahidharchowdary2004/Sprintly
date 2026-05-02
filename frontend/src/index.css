@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  /* Typography */
+  --font-display: "Outfit", sans-serif;
+  --font-body: "Outfit", sans-serif;
+
+  /* Premium Color Story: Cyber-Elegance */
+  --color-dark-obsidian: #030712;
+  --color-dark-surface: rgba(17, 24, 39, 0.6);
+  --color-accent-cyan: #22d3ee;
+  --color-accent-blue: #3b82f6;
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-shine: rgba(255, 255, 255, 0.03);
+
+  /* Shadows */
+  --shadow-neon: 0 0 20px rgba(34, 211, 238, 0.3);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+  body {
+    @apply bg-dark-obsidian text-slate-100 font-body selection:bg-accent-cyan/30 selection:text-accent-cyan;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(34, 211, 238, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Card */
+  .glass-card {
+    @apply bg-dark-surface backdrop-blur-xl border border-glass-border rounded-2xl shadow-glass transition-all duration-300;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: "";
+    @apply absolute inset-0 pointer-events-none;
+    background: linear-gradient(135deg, var(--color-glass-shine), transparent);
+  }
+
+  /* Interaction: Neon Glow on Hover */
+  .hover-glow:hover {
+    @apply border-accent-cyan/50 shadow-neon;
+  }
+
+  /* Buttons */
+  .btn-premium {
+    @apply px-6 py-3 bg-white text-black font-semibold rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-white/10;
+  }
+
+  .btn-outline {
+    @apply px-6 py-3 bg-transparent border border-white/10 text-white font-semibold rounded-xl transition-all duration-300 hover:bg-white/5 hover:border-white/30;
+  }
+
+  /* Input Fields */
+  .input-premium {
+    @apply w-full px-4 py-3 bg-[#111827] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-white placeholder-slate-500 transition-all;
+  }
+
+  .input-premium option {
+    @apply bg-[#111827] text-white;
+  }
+
+  /* Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-gradient {
+    animation: gradient 8s ease infinite;
+  }
+}
