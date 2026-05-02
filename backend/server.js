@@ -23,6 +23,15 @@ app.use(morgan('dev'));
 // Make io accessible to our routes
 app.set('io', io);
 
+// Health Check / Root Route
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'Operational', 
+    message: 'Sprintly Backend API is running successfully',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/projects', require('./routes/projects'));
