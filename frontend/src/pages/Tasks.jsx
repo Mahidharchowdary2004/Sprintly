@@ -10,6 +10,8 @@ const Tasks = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const projectIdFilter = searchParams.get('projectId');
+  const activeFilter = searchParams.get('filter');
+  const action = searchParams.get('action');
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -30,6 +32,7 @@ const Tasks = () => {
     try {
       const params = {};
       if (projectIdFilter) params.projectId = projectIdFilter;
+      if (activeFilter) params.filter = activeFilter;
       
       const res = await axios.get('/api/tasks', { params });
       setTasks(res.data);
@@ -38,7 +41,13 @@ const Tasks = () => {
       console.error(err);
       setLoading(false);
     }
-  }, [projectIdFilter]);
+  }, [projectIdFilter, activeFilter]);
+
+  useEffect(() => {
+    if (action === 'new' && user.role === 'Admin') {
+      handleOpenModal();
+    }
+  }, [action, user.role]);
 
   useEffect(() => {
     fetchTasks();
@@ -167,11 +176,11 @@ const Tasks = () => {
             <p className="text-slate-400 mt-3 text-lg">
               Operational task management and performance tracking.
             </p>
-            {projectIdFilter && (
+            {(projectIdFilter || activeFilter) && (
               <div className="flex items-center gap-3 mt-6">
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Active Filter:</span>
                 <div className="flex items-center gap-2 bg-accent-cyan/10 border border-accent-cyan/20 px-3 py-1 rounded-full text-accent-cyan text-[10px] font-bold uppercase tracking-wider">
-                  Project Workspace
+                  {activeFilter === 'overdue' ? 'Critical (Overdue)' : 'Project Workspace'}
                   <button onClick={() => navigate('/tasks')} className="hover:text-white transition-colors ml-1">
                     <X size={12} />
                   </button>

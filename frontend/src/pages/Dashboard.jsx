@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import socket from '../utils/socket';
@@ -6,6 +7,7 @@ import { CheckCircle2, Clock, AlertCircle, ListTodo, ArrowUpRight, TrendingUp, F
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
     total: 0,
     todo: 0,
@@ -160,7 +162,10 @@ const Dashboard = () => {
               <p className="text-red-200/70 text-sm mb-4 leading-relaxed">
                 You have {stats.overdue} overdue task{stats.overdue > 1 ? 's' : ''} that need immediate resolution to maintain velocity.
               </p>
-              <button className="text-xs font-bold text-red-500 uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all">
+              <button 
+                onClick={() => navigate('/tasks?filter=overdue')}
+                className="text-xs font-bold text-red-500 uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all"
+              >
                 Audit Overdue <ArrowUpRight size={14} />
               </button>
             </div>
@@ -176,10 +181,16 @@ const Dashboard = () => {
           <div className="glass-card p-6 border-white/5">
              <h3 className="text-white font-bold text-lg mb-4">Core Actions</h3>
              <div className="space-y-3">
-                <button className="w-full py-3 px-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 text-sm font-medium text-slate-300 hover:text-white transition-all text-left flex justify-between items-center group">
+                <button 
+                  onClick={() => navigate('/projects')}
+                  className="w-full py-3 px-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 text-sm font-medium text-slate-300 hover:text-white transition-all text-left flex justify-between items-center group"
+                >
                   Active Projects <ArrowUpRight size={16} className="text-slate-500 group-hover:text-accent-cyan transition-colors" />
                 </button>
-                <button className="w-full py-3 px-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 text-sm font-medium text-slate-300 hover:text-white transition-all text-left flex justify-between items-center group">
+                <button 
+                  onClick={() => navigate('/tasks?action=new')}
+                  className="w-full py-3 px-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 text-sm font-medium text-slate-300 hover:text-white transition-all text-left flex justify-between items-center group"
+                >
                   New Task <ArrowUpRight size={16} className="text-slate-500 group-hover:text-accent-cyan transition-colors" />
                 </button>
              </div>

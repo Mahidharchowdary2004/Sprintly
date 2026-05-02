@@ -34,11 +34,16 @@ const mapStatusToUI = (status) => {
 
 const getTasks = async (req, res) => {
   try {
-    const { projectId } = req.query;
+    const { projectId, filter } = req.query;
     let where = {};
     
     if (projectId) {
       where.projectId = projectId;
+    }
+
+    if (filter === 'overdue') {
+      where.status = { not: 'Completed' };
+      where.dueDate = { lt: new Date() };
     } else {
       if (req.user.role === 'Admin') {
         where.project = { createdById: req.user.id };
